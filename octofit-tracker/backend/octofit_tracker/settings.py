@@ -11,13 +11,14 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from pymongo import MongoClient
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
+# See https://docs.djangoproject.com/en/4.1/howto/deployment-checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-g^*%q$y^l7fk2tnz_57k_h-$$y=l3h3y4j+kj*q+^@8pm-pagc"
@@ -38,7 +39,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
-    "djongo",
     "corsheaders",
     "octofit_tracker",
 ]
@@ -80,12 +80,13 @@ WSGI_APPLICATION = "octofit_tracker.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "djongo",
-        "NAME": "octofit_db",
-        "HOST": "localhost",
-        "PORT": 27017,
+        "ENGINE": "django.db.backends.dummy",  # Dummy engine since pymongo is used directly
     }
 }
+
+# MongoDB connection setup
+MONGO_CLIENT = MongoClient("mongodb://localhost:27017/")
+MONGO_DB = MONGO_CLIENT["octofit_db"]
 
 
 # Password validation
